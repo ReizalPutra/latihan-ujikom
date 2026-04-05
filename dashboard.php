@@ -38,6 +38,9 @@
             $("#m_matkul").click(function() {
                 loadMatkul();
             });
+            $("#m_semester").click(function() {
+                loadSemester();
+            });
             // menu jadwal
             $("#jadwal").click(function() {
                 loadJadwal();
@@ -90,6 +93,20 @@
                     success: function(data) {
                         alert(data);
                         loadMatkul();
+                    }
+                });
+            });
+
+            //simpan data semester
+            $("#contentData").on("submit", "#formSemester", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'semester/semester.php?action=save',
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        alert(data);
+                        loadSemester();
                     }
                 });
             });
@@ -154,6 +171,21 @@
                 });
             });
             //hapus data matkul berdasarkan kode matkul
+            $("#contentData").on("click", "#deleteSemester", function() {
+                var kd_semester = $(this).attr("value");
+                $.ajax({
+                    url: 'semester/semester.php?action=delete',
+                    type: 'post',
+                    data: {
+                        kd_semester: kd_semester
+                    },
+                    success: function(data) {
+                        alert(data);
+                        loadMatkul();
+                    }
+                });
+            });
+            //hapus data jadwal berdasarkan id jadwal
             $("#contentData").on("click", "#deleteJadwal", function() {
                 var id = $(this).attr("value");
                 $.ajax({
@@ -205,6 +237,20 @@
                     type: 'get',
                     data: {
                         kd_matkul: kd_matkul
+                    },
+                    success: function(data) {
+                        $('#contentData').html(data);
+                    }
+                });
+            });
+            //Load form edit dengan parameter kd_semester
+            $("#contentData").on("click", "#editSemester", function() {
+                var kd_semester = $(this).attr("value");
+                $.ajax({
+                    url: 'semester/edit.php',
+                    type: 'get',
+                    data: {
+                        kd_semester: kd_semester
                     },
                     success: function(data) {
                         $('#contentData').html(data);
@@ -265,7 +311,20 @@
                     }
                 });
             });
-            //edit data matkul
+            //edit data semester
+            $("#contentData").on("submit", "#formEditSemester", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'semester/semester.php?action=edit',
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        alert(data);
+                        loadMatkul();
+                    }
+                });
+            });
+            //edit data semester
             $("#contentData").on("submit", "#formEditJadwal", function(e) {
                 e.preventDefault();
                 $.ajax({
@@ -304,6 +363,15 @@
         function loadMatkul() {
             $.ajax({
                 url: 'matkul/list.php',
+                type: 'get',
+                success: function(data) {
+                    $('#contentData').html(data);
+                }
+            });
+        }
+        function loadSemester() {
+            $.ajax({
+                url: 'semester/list.php',
                 type: 'get',
                 success: function(data) {
                     $('#contentData').html(data);

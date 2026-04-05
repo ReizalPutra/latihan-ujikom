@@ -98,7 +98,34 @@ class db
         $this->koneksi->query("delete from tbl_matkul where kd_matkul='$kd_matkul'");
         return true;
     }
-    // Matkul
+    // semester
+    function get_allSemester()
+    {
+        $data = $this->koneksi->query("select * from tbl_semester");
+        return $data;
+    }
+    function add_semester($kd_semester, $semester)
+    {
+        $this->koneksi->query("insert into tbl_semester(kd_semester,semester) values('$kd_semester','$semester')");
+        return true;
+    }
+    function update_semester($kd_semester, $semester)
+    {
+        $this->koneksi->query("UPDATE tbl_semester SET nama = '$semester' WHERE kd_semester='$kd_semester'");
+        return true;
+    }
+    function get_semesterById($kd_semester)
+    {
+        $data = $this->koneksi->query("select * from tbl_semester where kd_semester='$kd_semester'");
+        return $data;
+    }
+
+    function del_semester($kd_semester)
+    {
+        $this->koneksi->query("delete from tbl_semester where kd_semester='$kd_semester'");
+        return true;
+    }
+    // Jadwal
     function get_allJadwal()
     {
         $data = $this->koneksi->query("
