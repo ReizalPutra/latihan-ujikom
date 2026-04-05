@@ -163,4 +163,35 @@ class db
         $this->koneksi->query("delete from tbl_jadwal where id='$id'");
         return true;
     }
+
+    // KRS
+    function get_allKrs()
+    {
+        $data = $this->koneksi->query("select * from tbl_krs");
+        return $data;
+    }
+
+    function add_krs($nim, $id_jadwal, $kd_semester)
+    {
+        $this->koneksi->query("insert into tbl_krs(nim,id_jadwal,kd_semester) values('$nim','$id_jadwal','$kd_semester')");
+        return true;
+    }
+
+    function update_krs($id, $nim, $id_jadwal, $kd_semester)
+    {
+        $this->koneksi->query("UPDATE tbl_krs SET nim = '$nim', id_jadwal = '$id_jadwal', kd_semester = '$kd_semester' WHERE id='$id'");
+        return true;
+    }
+
+    function get_krsById($id)
+    {
+        $data = $this->koneksi->query("select * from tbl_krs where id='$id'");
+        return $data;
+    }
+
+    function del_krs($id)
+    {
+        $this->koneksi->query("delete from tbl_krs where id='$id'");
+        return true;
+    }
 }

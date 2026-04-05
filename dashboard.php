@@ -45,6 +45,10 @@
             $("#jadwal").click(function() {
                 loadJadwal();
             });
+            // menu krs
+            $("#krs").click(function() {
+                loadKrs();
+            });
 
             $("#contentData").on("click", "#addButton", function() {
                 $.ajax({
@@ -125,6 +129,20 @@
                 });
             });
 
+            //simpan data krs
+            $("#contentData").on("submit", "#formKrs", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'krs/jadwal.php?action=save',
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        alert(data);
+                        loadKrs();
+                    }
+                });
+            });
+
             //hapus data mahasiswa berdasarkan nim
             $("#contentData").on("click", "#deleteMhs", function() {
                 var kd_dosen = $(this).attr("value");
@@ -201,6 +219,22 @@
                 });
             });
 
+            //hapus data krs berdasarkan id
+            $("#contentData").on("click", "#deleteKrs", function() {
+                var id = $(this).attr("value");
+                $.ajax({
+                    url: 'krs/jadwal.php?action=delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
+                        alert(data);
+                        loadKrs();
+                    }
+                });
+            });
+
             //Load form edit dengan parameter IdMhsw
             $("#contentData").on("click", "#editMhs", function() {
                 var nim = $(this).attr("value");
@@ -262,6 +296,21 @@
                 var id = $(this).attr("value");
                 $.ajax({
                     url: 'jadwal/edit.php',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
+                        $('#contentData').html(data);
+                    }
+                });
+            });
+
+            //Load form edit dengan parameter id krs
+            $("#contentData").on("click", "#editKrs", function() {
+                var id = $(this).attr("value");
+                $.ajax({
+                    url: 'krs/edit.php',
                     type: 'get',
                     data: {
                         id: id
@@ -338,6 +387,20 @@
                 });
             });
 
+            //edit data krs
+            $("#contentData").on("submit", "#formEditKrs", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'krs/jadwal.php?action=edit',
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        alert(data);
+                        loadKrs();
+                    }
+                });
+            });
+
 
 
         }); //end ready function
@@ -351,6 +414,7 @@
                 }
             });
         }
+
         function loadDosen() {
             $.ajax({
                 url: 'dosen/list.php',
@@ -360,6 +424,7 @@
                 }
             });
         }
+
         function loadMatkul() {
             $.ajax({
                 url: 'matkul/list.php',
@@ -369,6 +434,7 @@
                 }
             });
         }
+
         function loadSemester() {
             $.ajax({
                 url: 'semester/list.php',
@@ -378,9 +444,20 @@
                 }
             });
         }
+
         function loadJadwal() {
             $.ajax({
                 url: 'jadwal/list.php',
+                type: 'get',
+                success: function(data) {
+                    $('#contentData').html(data);
+                }
+            });
+        }
+
+        function loadKrs() {
+            $.ajax({
+                url: 'krs/list.php',
                 type: 'get',
                 success: function(data) {
                     $('#contentData').html(data);
