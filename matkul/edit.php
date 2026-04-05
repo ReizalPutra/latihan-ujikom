@@ -33,7 +33,7 @@
                                    
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Alamat</label>
+                                    <label for="exampleInputEmail1">sks</label>
                                     <input type="text" class="form-control" name="sks" value="<?php echo $result['sks']; ?>">
                                    
                                 </div>
