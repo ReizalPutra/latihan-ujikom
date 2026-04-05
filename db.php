@@ -70,4 +70,32 @@ class db
         $this->koneksi->query("delete from tbl_dosen where kd_dosen='$kd_dosen'");
         return true;
     }
+
+    // Matkul
+     function get_allMatkul()
+    {
+        $data = $this->koneksi->query("select * from tbl_matkul");
+        return $data;
+    }
+     function add_matkul($kd_matkul, $nama,  $sks)
+    {
+        $this->koneksi->query("insert into tbl_matkul(kd_matkul,nama,sks) values('$kd_matkul','$nama','$sks')");
+        return true;
+    }
+      function update_matkul($kd_matkul, $nama, $sks)
+    {
+        $this->koneksi->query("UPDATE tbl_matkul SET nama = '$nama', sks = '$sks' WHERE kd_matkul='$kd_matkul'");
+        return true;
+    }
+        function get_matkulByKd($kd_matkul)
+    {
+        $data = $this->koneksi->query("select * from tbl_matkul where kd_matkul='$kd_matkul'");
+        return $data;
+    }
+
+    function del_matkul($kd_matkul)
+    {
+        $this->koneksi->query("delete from tbl_matkul where kd_matkul='$kd_matkul'");
+        return true;
+    }
 }

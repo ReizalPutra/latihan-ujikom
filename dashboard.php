@@ -34,6 +34,10 @@
             $("#m_dosen").click(function() {
                 loadDosen();
             });
+            // menu matkul
+            $("#m_matkul").click(function() {
+                loadMatkul();
+            });
 
             $("#contentData").on("click", "#addButton", function() {
                 $.ajax({
@@ -72,6 +76,20 @@
                 });
             });
 
+            //simpan data matkul
+            $("#contentData").on("submit", "#formMatkul", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'matkul/matkul.php?action=save',
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        alert(data);
+                        loadMatkul();
+                    }
+                });
+            });
+
             //hapus data mahasiswa berdasarkan nim
             $("#contentData").on("click", "#deleteMhs", function() {
                 var kd_dosen = $(this).attr("value");
@@ -102,6 +120,21 @@
                     }
                 });
             });
+            //hapus data matkul berdasarkan kode matkul
+            $("#contentData").on("click", "#deleteMatkul", function() {
+                var kd_matkul = $(this).attr("value");
+                $.ajax({
+                    url: 'matkul/matkul.php?action=delete',
+                    type: 'post',
+                    data: {
+                        kd_matkul: kd_matkul
+                    },
+                    success: function(data) {
+                        alert(data);
+                        loadMatkul();
+                    }
+                });
+            });
 
             //Load form edit dengan parameter IdMhsw
             $("#contentData").on("click", "#editMhs", function() {
@@ -125,6 +158,20 @@
                     type: 'get',
                     data: {
                         kd_dosen: kd_dosen
+                    },
+                    success: function(data) {
+                        $('#contentData').html(data);
+                    }
+                });
+            });
+            //Load form edit dengan parameter Kd_matkul
+            $("#contentData").on("click", "#editMatkul", function() {
+                var kd_matkul = $(this).attr("value");
+                $.ajax({
+                    url: 'matkul/edit.php',
+                    type: 'get',
+                    data: {
+                        kd_matkul: kd_matkul
                     },
                     success: function(data) {
                         $('#contentData').html(data);
@@ -158,6 +205,19 @@
                     }
                 });
             });
+            //edit data matkul
+            $("#contentData").on("submit", "#formEditMatkul", function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'matkul/matkul.php?action=edit',
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        alert(data);
+                        loadMatkul();
+                    }
+                });
+            });
 
 
 
@@ -175,6 +235,15 @@
         function loadDosen() {
             $.ajax({
                 url: 'dosen/list.php',
+                type: 'get',
+                success: function(data) {
+                    $('#contentData').html(data);
+                }
+            });
+        }
+        function loadMatkul() {
+            $.ajax({
+                url: 'matkul/list.php',
                 type: 'get',
                 success: function(data) {
                     $('#contentData').html(data);
